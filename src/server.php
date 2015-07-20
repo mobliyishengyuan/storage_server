@@ -17,6 +17,8 @@ class Storage_Server {
         $this->serv->on('Connect', array($this, 'OnConnect'));
         $this->serv->on('Receive', array($this, 'OnReceive'));
         $this->serv->on('Close', array($this, 'OnClose'));
+        
+        $this->serv->start();
     }
     
     public function onStart($serv) {
@@ -36,7 +38,7 @@ class Storage_Server {
         
         $head_str = substr($data, 0, 32);
         $head_arr = unpack('Sid/Sversion/Llog_id/a16provider/Lmagic_num/Lreserved', $head);
-        $body_str = substr($data, 32);
+        $body_str = trim(substr($data, 32));
         $body_arr = msgpack_unpack($body_str);
     }
     
