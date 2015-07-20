@@ -10,8 +10,7 @@ header
         | provider                                                              |
         |--------|--------|--------|--------|--------|--------|--------|--------|
         | imagic_num                        | reserved                          |
-        |--------|--------|--------|--------|
-        | body_len                          |
+
 
 reserved
 =====
@@ -19,3 +18,10 @@ reserved
         value   desc  
         1       set
         2       get
+
+request
+=====
+
+        header
+        body (msg_pack)
+        \r\n\r\n
