@@ -7,7 +7,9 @@ class Storage_Server {
         $this->serv->set(array(
             'worker_num' => 1,
             'tasker_num' => 1, // todo，必发不影响同步序列
-            'max_request' => 10000,
+            'max_request' => 1000,
+            'open_eof_check' => true,
+            'package_eof' => "\r\n\r\n",
         ));
         
         $this->serv->on('Start', array($this, 'OnStart'));
@@ -30,7 +32,12 @@ class Storage_Server {
     }
     
     public function onReceive($serv, $fd, $from_id, $data) {
+        printf("Server Receive Data[len=%s] from Cliend #%s data\n", strlen($data), $fd);
         
+        $head_str = substr($data, 0, 32);
+        $head_arr = unpack('Sid/Sversion/Llog_id/a16provider/Lmagic_num/Lreserved', $head);
+        $body_str = substr($data, 32);
+        $body_arr = msgpack_unpack($body_str);
     }
     
     public function onClose($serv, $fd, $from_id) {
