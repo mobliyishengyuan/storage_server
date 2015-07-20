@@ -37,7 +37,7 @@ class Storage_Server {
         printf("Server Receive Data[len=%s] from Cliend #%s data\n", strlen($data), $fd);
         
         $head_str = substr($data, 0, 32);
-        $head_arr = unpack('Sid/Sversion/Llog_id/a16provider/Lmagic_num/Lreserved', $head);
+        $head_arr = unpack('Sid/Sversion/Llog_id/a16provider/Lmagic_num/Lreserved', $head_str);
         $body_str = trim(substr($data, 32));
         $body_arr = msgpack_unpack($body_str);
     }
